@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Assignment2</string>
+
+    <array name="familyMember">
+    <item>father@home.com</item>
+    <item>mother@home.com</item>
+    <item>grandma@home.com</item>
+    <item>grandpa@home.com</item>
+    </array>
 </resources>
