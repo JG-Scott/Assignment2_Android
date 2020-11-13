@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class User {
     private ArrayList<FamilyMember> Family;
 
-    public void User(){
+    public User(){
         Family = new ArrayList<>();
     }
 
