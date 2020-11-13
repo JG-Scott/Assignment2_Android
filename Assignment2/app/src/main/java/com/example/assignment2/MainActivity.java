@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.bluetooth.BluetoothClass;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,13 +13,20 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
-    String n;
+    String name;
+    int s;
+    int d;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
     SharedPreferences sharedPref;
     User user = new User();
     @Override
@@ -33,28 +41,53 @@ public class MainActivity extends AppCompatActivity {
 
         // get or create SharedPreferences
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
-
+        database = FirebaseDatabase.getInstance();
 
     }
 
     public void sendReading(View view){
-        EditText name = findViewById(R.id.Name);
+        EditText nameText = findViewById(R.id.Name);
         EditText dia = findViewById(R.id.Dia);
         EditText sys = findViewById(R.id.Sys);
-        n = name.getText().toString();
-        int d = Integer.parseInt(dia.getText().toString());
-        int s = Integer.parseInt(sys.getText().toString());
-           user.addReading(n, s, d);
+        name = nameText.getText().toString();
+        d = Integer.parseInt(dia.getText().toString());
+        s = Integer.parseInt(sys.getText().toString());
         String uniqueID;
-        if(sharedPref.getString("user_id", "null").equals("null")){
+        if(sharedPref.getString("user_id", null) == null){ // if user doesnt exist.
             uniqueID = UUID.randomUUID().toString();
-        } else {
+            sharedPref.edit().putString("user_id", uniqueID).apply();
+
+
+            myRef = database.getReference("Users").child(uniqueID);
+            user.addReading(name, s, d);
+            myRef.setValue(user);
+
+        } else { //if user exists
             uniqueID = sharedPref.getString("user_id", "default if empty");
+            existingUserSend(uniqueID);
         }
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Users").child(uniqueID);
+    }
 
-        myRef.setValue(user);
+    public void existingUserSend(String id){
+
+        myRef = database.getReference("Users").child(id);
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                User user = dataSnapshot.getValue(User.class);
+
+                Log.v("User", user.getFamily().get(0).getName());
+                user.addReading(name, s, d);
+                myRef.setValue(user);
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("hmm", "Failed to read value.", error.toException());
+            }
+        });
     }
 }   

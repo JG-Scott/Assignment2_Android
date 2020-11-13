@@ -11,6 +11,8 @@ public class FamilyMember {
         readings = new ArrayList<>();
     }
 
+    public FamilyMember() {};
+
     public ArrayList<Reading> getReadings() {
         return readings;
     }

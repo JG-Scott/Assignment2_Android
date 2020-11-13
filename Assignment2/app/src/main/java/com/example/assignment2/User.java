@@ -11,8 +11,14 @@ public class User {
         Family = new ArrayList<>();
     }
 
+
+
     public ArrayList<FamilyMember> getFamily() {
         return Family;
+    }
+
+    public void setFamily(ArrayList<FamilyMember> family) {
+        Family = family;
     }
 
     public void addFamily(FamilyMember person) {

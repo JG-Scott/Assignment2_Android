@@ -15,6 +15,8 @@ public class Reading {
         condition = this.getCondition(s, d);
     }
 
+    public Reading(){}
+
     public int getSystolicReading() {
         return systolicReading;
     }
