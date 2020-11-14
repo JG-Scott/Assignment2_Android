@@ -3,12 +3,14 @@ package com.example.assignment2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.bluetooth.BluetoothClass;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -42,10 +44,23 @@ public class MainActivity extends AppCompatActivity {
         // get or create SharedPreferences
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
         database = FirebaseDatabase.getInstance();
+        Button send = findViewById(R.id.button);
+        send.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                sendReading();
+            }
+        });
 
+
+        Button average = findViewById(R.id.buttonAVG);
+        send.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                toAverageScreen();
+            }
+        });
     }
 
-    public void sendReading(View view){
+    public void sendReading(){
         EditText nameText = findViewById(R.id.Name);
         EditText dia = findViewById(R.id.Dia);
         EditText sys = findViewById(R.id.Sys);
@@ -89,5 +104,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.w("hmm", "Failed to read value.", error.toException());
             }
         });
+    }
+
+
+    public void toAverageScreen(){
+//        Intent i = new Intent(getApplicationContext(), )
     }
 }   

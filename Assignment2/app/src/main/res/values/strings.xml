@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Assignment2</string>
+    <string name="AvgButton">View Average Readings</string>
+    <string name="SendReadingButton">Submit Reading</string>
 
     <array name="familyMember">
     <item>father@home.com</item>
