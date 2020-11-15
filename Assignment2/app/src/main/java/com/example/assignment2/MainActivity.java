@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -65,21 +66,25 @@ public class MainActivity extends AppCompatActivity {
         EditText dia = findViewById(R.id.Dia);
         EditText sys = findViewById(R.id.Sys);
         name = spinner.getSelectedItem().toString();
-        d = Integer.parseInt(dia.getText().toString());
-        s = Integer.parseInt(sys.getText().toString());
-        String uniqueID;
-        if(sharedPref.getString("user_id", null) == null){ // if user doesnt exist.
-            uniqueID = UUID.randomUUID().toString();
-            sharedPref.edit().putString("user_id", uniqueID).apply();
+        if(dia.getText().toString().trim().equals("") || sys.getText().toString().trim().equals("")){
+            Toast.makeText(getApplicationContext(), "Input fields cannot be empty", Toast.LENGTH_LONG).show();
+        } else {
+            d = Integer.parseInt(dia.getText().toString());
+            s = Integer.parseInt(sys.getText().toString());
+            String uniqueID;
+            if (sharedPref.getString("user_id", null) == null) { // if user doesnt exist.
+                uniqueID = UUID.randomUUID().toString();
+                sharedPref.edit().putString("user_id", uniqueID).apply();
 
 
-            myRef = database.getReference("Users").child(uniqueID);
-            user.addReading(name, s, d);
-            myRef.setValue(user);
+                myRef = database.getReference("Users").child(uniqueID);
+                user.addReading(name, s, d);
+                myRef.setValue(user);
 
-        } else { //if user exists
-            uniqueID = sharedPref.getString("user_id", "default if empty");
-            existingUserSend(uniqueID);
+            } else { //if user exists
+                uniqueID = sharedPref.getString("user_id", "default if empty");
+                existingUserSend(uniqueID);
+            }
         }
 
     }
