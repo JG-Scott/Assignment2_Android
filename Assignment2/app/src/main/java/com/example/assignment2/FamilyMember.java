@@ -28,4 +28,29 @@ public class FamilyMember {
     public void setName(String name) {
         this.name = name;
     }
+
+    public float getAvgSys(int month){
+        float sum = 0;
+        float count = 0;
+        for(Reading r : readings){
+            if(r.getReadingDate().getMonth() == month){
+                sum += (float)r.getSystolicReading();
+                count++;
+            }
+        }
+        return sum/count;
+    }
+
+    public float getAvgDia(int month){
+        float sum = 0;
+        float count = 0;
+        for(Reading r : readings){
+            if(r.getReadingDate().getMonth() == month){
+                sum += (float)r.getDiastolicReading();
+                count++;
+            }
+        }
+        return sum/count;
+    }
+
 }

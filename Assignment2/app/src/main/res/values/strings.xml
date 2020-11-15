@@ -2,11 +2,34 @@
     <string name="app_name">Assignment2</string>
     <string name="AvgButton">View Average Readings</string>
     <string name="SendReadingButton">Submit Reading</string>
+    <string name="lblFamilyMember">Family Member:</string>
+    <string name="lblSystolic">Systolic Reading:</string>
+    <string name="lblDiastolic">Diastolic Reading:</string>
+    <string name="mtdReadings">"Average month-date readings of November 2020"</string>
+    <string name="refreshbtn">Refresh</string>
+    <string name="Diastolic">Diastolic Reading</string>
+    <string name="Systolic">Systolic Reading</string>
+    <string name="lblAvgReading">Average Condition:</string>
 
     <array name="familyMember">
-    <item>father@home.com</item>
-    <item>mother@home.com</item>
-    <item>grandma@home.com</item>
-    <item>grandpa@home.com</item>
+        <item>father@home.com</item>
+        <item>mother@home.com</item>
+        <item>grandma@home.com</item>
+        <item>grandpa@home.com</item>
+    </array>
+
+    <array name="Months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
     </array>
 </resources>

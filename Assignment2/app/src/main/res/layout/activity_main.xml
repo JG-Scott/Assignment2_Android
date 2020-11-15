@@ -5,43 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center"
     tools:context=".MainActivity">
 
 
-    <EditText
-    android:id="@+id/Name"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:ems="10"
-    android:inputType="textPersonName"
-    android:text="Name" />
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <EditText
         android:id="@+id/Sys"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="@string/Systolic"
         android:inputType="number" />
     <EditText
         android:id="@+id/Dia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="@string/Diastolic"
         android:inputType="number" />
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/SendReadingButton" />
 
     <Button
         android:id="@+id/buttonAVG"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
         android:text="@string/AvgButton" />
 
