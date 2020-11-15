@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         Button average = findViewById(R.id.buttonAVG);
-        send.setOnClickListener(new View.OnClickListener() {
+        average.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 toAverageScreen();
             }
@@ -61,10 +61,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendReading(){
-        EditText nameText = findViewById(R.id.Name);
+        Spinner spinner = findViewById(R.id.spinner);
         EditText dia = findViewById(R.id.Dia);
         EditText sys = findViewById(R.id.Sys);
-        name = nameText.getText().toString();
+        name = spinner.getSelectedItem().toString();
         d = Integer.parseInt(dia.getText().toString());
         s = Integer.parseInt(sys.getText().toString());
         String uniqueID;
@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void toAverageScreen(){
-//        Intent i = new Intent(getApplicationContext(), )
+        Intent i = new Intent(getApplicationContext(), AverageActivity.class);
+        startActivity(i);
     }
 }   
