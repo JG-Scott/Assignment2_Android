@@ -1,8 +1,10 @@
 package com.example.assignment2;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.bluetooth.BluetoothClass;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference myRef;
     SharedPreferences sharedPref;
     User user = new User();
+    String familySent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         // get or create SharedPreferences
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
+
+        System.out.println(sharedPref.toString());
         database = FirebaseDatabase.getInstance();
         Button send = findViewById(R.id.button);
         send.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
         average.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 toAverageScreen();
+            }
+        });
+
+        Button allReadings = findViewById(R.id.buttonViewAllReadings);
+        allReadings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toSingleReadings();
             }
         });
     }
@@ -82,6 +95,20 @@ public class MainActivity extends AppCompatActivity {
             existingUserSend(uniqueID);
         }
 
+        if (d > 180 || s > 120)  {
+            AlertDialog healthWarning = new AlertDialog.Builder(MainActivity.this).create();
+            healthWarning.setTitle("WARNING");
+            healthWarning.setMessage("Warning your Systolic and Diastolic numbers are too high," +
+                    " please seek medical attention immediately");
+            healthWarning.setButton(AlertDialog.BUTTON_NEUTRAL, "Dismiss",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            healthWarning.show();
+        }
     }
 
     public void existingUserSend(String id){
@@ -106,9 +133,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     public void toAverageScreen(){
         Intent i = new Intent(getApplicationContext(), AverageActivity.class);
+        startActivity(i);
+    }
+
+    public void toSingleReadings() {
+        Intent i = new Intent(this, SingleReadingActiviy.class);
+        Spinner spinner = findViewById(R.id.spinner);
+        name = spinner.getSelectedItem().toString();
+
+        i.putExtra("FamilyMember", name);
         startActivity(i);
     }
 }   

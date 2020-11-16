@@ -10,6 +10,15 @@
     <string name="Diastolic">Diastolic Reading</string>
     <string name="Systolic">Systolic Reading</string>
     <string name="lblAvgReading">Average Condition:</string>
+    <string name="AllReadingsButton">View all readings</string>
+    <string name="lblDate">Date</string>
+    <string name="Condition">Condition</string>
+    <string name="btnUpdate">Update</string>
+    <string name="btnDelete">Delete</string>
+    <string name="hintSystolic">Systolic reading</string>
+    <string name="hintDiastolic">Diastolic reading</string>
+
+
 
     <array name="familyMember">
         <item>father@home.com</item>

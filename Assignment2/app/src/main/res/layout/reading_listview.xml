@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/customborder">
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/lblDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:paddingRight="17dp"
+            android:paddingLeft="10dp"
+            android:text="@string/lblDate" />
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:textSize="15sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
+    </LinearLayout>
+
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/readingLblSystolic"
+            android:layout_width="wrap_content"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/lblSystolic" />
+        <TextView
+            android:id="@+id/readingSysTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
+    </LinearLayout>
+
+
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/readingLblDiastolic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:textStyle="bold"
+            android:paddingRight="5dp"
+            android:textSize="15sp"
+            android:paddingBottom="5dp"
+            android:layout_weight="1"
+            android:text="@string/lblDiastolic" />
+        <TextView
+            android:id="@+id/readingDiaTextView"
+            android:layout_width="wrap_content"
+            android:textSize="15sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
+    </LinearLayout>
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/lblConditionReading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:textStyle="bold"
+            android:paddingRight="5dp"
+            android:textSize="15sp"
+            android:paddingBottom="5dp"
+            android:layout_weight="1"
+            android:text="@string/Condition" />
+        <TextView
+            android:id="@+id/readingCondition"
+            android:layout_width="wrap_content"
+            android:textSize="15sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
+    </LinearLayout>
+</LinearLayout>
