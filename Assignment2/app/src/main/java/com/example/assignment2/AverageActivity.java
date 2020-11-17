@@ -2,7 +2,9 @@ package com.example.assignment2;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.arch.core.internal.FastSafeIterableMap;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -31,6 +33,7 @@ public class AverageActivity extends AppCompatActivity {
 
     ListView avgListview;
     SharedPreferences sharedPref;
+    List<FamilyMember> familyMemberList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +46,17 @@ public class AverageActivity extends AppCompatActivity {
 
         avgListview = findViewById(R.id.avgListview);
 
+        avgListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                FamilyMember f = familyMemberList.get(position);
+                Intent i = new Intent(getApplicationContext(), SingleReadingActiviy.class);
+                String name = f.getName();
+                i.putExtra("FamilyMember", name);
+                startActivity(i);
+                return false;
+            }
+        });
 
     }
 
@@ -57,6 +71,7 @@ public class AverageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User member = dataSnapshot.getValue(User.class);
+                familyMemberList = member.getFamily();
                 AverageListAdapter adapter = new AverageListAdapter(AverageActivity.this, member.getFamily());
                 avgListview.setAdapter(adapter);
             }
