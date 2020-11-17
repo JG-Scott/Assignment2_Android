@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             existingUserSend(uniqueID);
         }
 
-        if (d > 180 || s > 120)  {
+        if (s > 180 || d > 120)  {
             AlertDialog healthWarning = new AlertDialog.Builder(MainActivity.this).create();
             healthWarning.setTitle("WARNING");
             healthWarning.setMessage("Warning your Systolic and Diastolic numbers are too high," +

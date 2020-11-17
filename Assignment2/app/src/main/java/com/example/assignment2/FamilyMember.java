@@ -32,10 +32,12 @@ public class FamilyMember {
     public float getAvgSys(int month){
         float sum = 0;
         float count = 0;
-        for(Reading r : readings){
-            if(r.getReadingDate().getMonth() == month){
-                sum += (float)r.getSystolicReading();
-                count++;
+        for(Reading r : readings) {
+            if (r != null) {
+                if (r.getReadingDate().getMonth() == month) {
+                    sum += (float) r.getSystolicReading();
+                    count++;
+                }
             }
         }
         return sum/count;
@@ -44,10 +46,12 @@ public class FamilyMember {
     public float getAvgDia(int month){
         float sum = 0;
         float count = 0;
-        for(Reading r : readings){
-            if(r.getReadingDate().getMonth() == month){
-                sum += (float)r.getDiastolicReading();
-                count++;
+        for(Reading r : readings) {
+            if (r != null) {
+                if (r.getReadingDate().getMonth() == month) {
+                    sum += (float) r.getDiastolicReading();
+                    count++;
+                }
             }
         }
         return sum/count;
