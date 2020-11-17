@@ -40,6 +40,10 @@ public class SingleReadingActiviy extends AppCompatActivity {
     String familyMember;
     String uniqueID;
     FamilyMember memberToGetReadings;
+    String parentNumber;
+    int size;
+    DatabaseReference newDbRef;
+    ArrayList<String> uniqueIdList = new ArrayList<String>();
 
     List<Reading> readingList;
 
@@ -57,11 +61,12 @@ public class SingleReadingActiviy extends AppCompatActivity {
 
         readingList = new ArrayList<Reading>();
 
+
         readingListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Reading reading = readingList.get(position);
-                showUpdateDialog(reading.getSystolicReading(), reading.getDiastolicReading());
+                showUpdateDialog(reading.getId(), reading.getSystolicReading(), reading.getDiastolicReading());
                 return false;
             }
         });
@@ -79,25 +84,61 @@ public class SingleReadingActiviy extends AppCompatActivity {
                 User member = dataSnapshot.getValue(User.class);
                 ArrayList<FamilyMember> family;
                 family = member.getFamily();
+                readingList.clear();
+                size = family.size();
 
                 for (int i = 0; i < family.size(); i++) {
                     if (family.get(i).getName().equals(familyMember)) {
                         memberToGetReadings = family.get(i);
+                        readingList = memberToGetReadings.getReadings();
                         break;
                     }
                 }
-                readingList = memberToGetReadings.getReadings();
+
+                int i = 0;
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String child = String.valueOf(i);
+                    if(ds.child(child).child("name").getValue().toString().equals(familyMember)) {
+                        newDbRef = dbRef.child("family").child(child).child("readings");
+                        newDbRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                    uniqueIdList.add(ds.child("id").getValue().toString());
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                        break;
+                    }
+                    i++;
+                }
+
                 ReadingListAdapter adapter = new ReadingListAdapter(SingleReadingActiviy.this, memberToGetReadings.getReadings());
                 readingListView.setAdapter(adapter);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
+
     }
 
-    private void updateReading(int systolic, int diastolic) {
+    private void updateReading(final String id, int systolic, int diastolic) {
+        int x = 0;
+        for (int i = 0; i < uniqueIdList.size(); i++) {
+            if (id.equals(uniqueIdList.get(i))) {
+                x = i;
+                break;
+            }
+        }
+
+        newDbRef = newDbRef.child(String.valueOf(x));
         Reading reading = new Reading(systolic, diastolic);
-        Task setValueTask = dbRef.setValue(reading);
+        Task setValueTask = newDbRef.setValue(reading);
         setValueTask.addOnSuccessListener(new OnSuccessListener() {
             @Override
             public void onSuccess(Object o) {
@@ -112,14 +153,43 @@ public class SingleReadingActiviy extends AppCompatActivity {
                         "Something went wrong" + e.toString(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void deleteReading() {
 
     }
 
+    private void deleteReading(final String id) {
+        int x = 0;
+        for (int i = 0; i < uniqueIdList.size(); i++) {
+            if (id.equals(uniqueIdList.get(i))) {
+                x = i;
+                break;
+            }
+        }
 
-    private void showUpdateDialog(final int systolic, int diastolic) {
+        newDbRef = newDbRef.child(String.valueOf(x));
+
+        Task setRemoveTask = newDbRef.removeValue();
+        setRemoveTask.addOnSuccessListener(new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+                Toast.makeText(SingleReadingActiviy.this,
+                        "Reading Deleted.",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        setRemoveTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(SingleReadingActiviy.this,
+                        "Something went wrong.\n" + e.toString(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+
+    private void showUpdateDialog(final String id, final int systolic, int diastolic) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
 
         LayoutInflater inflater = getLayoutInflater();
@@ -158,8 +228,7 @@ public class SingleReadingActiviy extends AppCompatActivity {
                     return;
                 }
 
-                updateReading(s, d);
-
+                updateReading(id, s, d);
                 alertDialog.dismiss();
             }
         });
@@ -168,8 +237,7 @@ public class SingleReadingActiviy extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                deleteReading(id);
                 alertDialog.dismiss();
             }
         });
