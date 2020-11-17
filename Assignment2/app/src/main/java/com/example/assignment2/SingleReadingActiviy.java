@@ -40,7 +40,6 @@ public class SingleReadingActiviy extends AppCompatActivity {
     String familyMember;
     String uniqueID;
     FamilyMember memberToGetReadings;
-    String parentNumber;
     int size;
     DatabaseReference newDbRef;
     ArrayList<String> uniqueIdList = new ArrayList<String>();
@@ -94,15 +93,18 @@ public class SingleReadingActiviy extends AppCompatActivity {
                         break;
                     }
                 }
-
                 int i = 0;
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                System.out.println(dataSnapshot.getChildrenCount());
+                for(DataSnapshot ds : dataSnapshot.child("family").getChildren()) {
+                    System.out.println(i);
                     String child = String.valueOf(i);
-                    if(ds.child(child).child("name").getValue().toString().equals(familyMember)) {
+                    i++;
+                    if(ds.child("name").getValue().toString().equals(familyMember)) {
                         newDbRef = dbRef.child("family").child(child).child("readings");
                         newDbRef.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                uniqueIdList.clear();
                                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                     uniqueIdList.add(ds.child("id").getValue().toString());
                                 }
@@ -113,9 +115,7 @@ public class SingleReadingActiviy extends AppCompatActivity {
 
                             }
                         });
-                        break;
                     }
-                    i++;
                 }
 
                 ReadingListAdapter adapter = new ReadingListAdapter(SingleReadingActiviy.this, memberToGetReadings.getReadings());
