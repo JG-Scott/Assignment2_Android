@@ -80,23 +80,9 @@ public class SingleReadingActiviy extends AppCompatActivity {
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User member = dataSnapshot.getValue(User.class);
-                ArrayList<FamilyMember> family;
-                family = member.getFamily();
-                readingList.clear();
-                size = family.size();
 
-                for (int i = 0; i < family.size(); i++) {
-                    if (family.get(i).getName().equals(familyMember)) {
-                        memberToGetReadings = family.get(i);
-                        readingList = memberToGetReadings.getReadings();
-                        break;
-                    }
-                }
                 int i = 0;
-                System.out.println(dataSnapshot.getChildrenCount());
                 for(DataSnapshot ds : dataSnapshot.child("family").getChildren()) {
-                    System.out.println(i);
                     String child = String.valueOf(i);
                     i++;
                     if(ds.child("name").getValue().toString().equals(familyMember)) {
@@ -105,9 +91,14 @@ public class SingleReadingActiviy extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 uniqueIdList.clear();
+                                readingList.clear();
                                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                    Reading reading = ds.getValue(Reading.class);
+                                    readingList.add(reading);
                                     uniqueIdList.add(ds.child("id").getValue().toString());
                                 }
+                                ReadingListAdapter adapter = new ReadingListAdapter(SingleReadingActiviy.this, readingList);
+                                readingListView.setAdapter(adapter);
                             }
 
                             @Override
@@ -117,9 +108,6 @@ public class SingleReadingActiviy extends AppCompatActivity {
                         });
                     }
                 }
-
-                ReadingListAdapter adapter = new ReadingListAdapter(SingleReadingActiviy.this, memberToGetReadings.getReadings());
-                readingListView.setAdapter(adapter);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
@@ -135,10 +123,9 @@ public class SingleReadingActiviy extends AppCompatActivity {
                 break;
             }
         }
-
-        newDbRef = newDbRef.child(String.valueOf(x));
+        DatabaseReference updateDbRef = newDbRef.child(String.valueOf(x));
         Reading reading = new Reading(systolic, diastolic);
-        Task setValueTask = newDbRef.setValue(reading);
+        Task setValueTask = updateDbRef.setValue(reading);
         setValueTask.addOnSuccessListener(new OnSuccessListener() {
             @Override
             public void onSuccess(Object o) {
@@ -165,9 +152,9 @@ public class SingleReadingActiviy extends AppCompatActivity {
             }
         }
 
-        newDbRef = newDbRef.child(String.valueOf(x));
+        DatabaseReference deleteDbRef = newDbRef.child(String.valueOf(x));
 
-        Task setRemoveTask = newDbRef.removeValue();
+        Task setRemoveTask = deleteDbRef.removeValue();
         setRemoveTask.addOnSuccessListener(new OnSuccessListener() {
             @Override
             public void onSuccess(Object o) {
@@ -184,10 +171,7 @@ public class SingleReadingActiviy extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
-
 
     private void showUpdateDialog(final String id, final int systolic, int diastolic) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
@@ -243,9 +227,4 @@ public class SingleReadingActiviy extends AppCompatActivity {
         });
 
     }
-
-
-
-
-
 }
