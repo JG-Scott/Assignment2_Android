@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -42,7 +43,7 @@ public class SingleReadingActiviy extends AppCompatActivity {
     FamilyMember memberToGetReadings;
     int size;
     DatabaseReference newDbRef;
-    ArrayList<String> uniqueIdList = new ArrayList<String>();
+    String[] uniqueIdList = new String[100];
 
     List<Reading> readingList;
 
@@ -90,12 +91,15 @@ public class SingleReadingActiviy extends AppCompatActivity {
                         newDbRef.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                uniqueIdList.clear();
+                                Arrays.fill(uniqueIdList, null);
                                 readingList.clear();
                                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                     Reading reading = ds.getValue(Reading.class);
                                     readingList.add(reading);
-                                    uniqueIdList.add(ds.child("id").getValue().toString());
+                                    String k = ds.getKey();
+                                    int key = Integer.parseInt(k);
+                                    System.out.println(ds.getKey());
+                                    uniqueIdList[key] = (ds.child("id").getValue().toString());
                                 }
                                 ReadingListAdapter adapter = new ReadingListAdapter(SingleReadingActiviy.this, readingList);
                                 readingListView.setAdapter(adapter);
@@ -117,8 +121,8 @@ public class SingleReadingActiviy extends AppCompatActivity {
 
     private void updateReading(final String id, int systolic, int diastolic) {
         int x = 0;
-        for (int i = 0; i < uniqueIdList.size(); i++) {
-            if (id.equals(uniqueIdList.get(i))) {
+        for (int i = 0; i < uniqueIdList.length; i++) {
+            if (id.equals(uniqueIdList[i])) {
                 x = i;
                 break;
             }
@@ -145,8 +149,8 @@ public class SingleReadingActiviy extends AppCompatActivity {
 
     private void deleteReading(final String id) {
         int x = 0;
-        for (int i = 0; i < uniqueIdList.size(); i++) {
-            if (id.equals(uniqueIdList.get(i))) {
+        for (int i = 0; i < uniqueIdList.length; i++) {
+            if (id.equals(uniqueIdList[i])) {
                 x = i;
                 break;
             }
