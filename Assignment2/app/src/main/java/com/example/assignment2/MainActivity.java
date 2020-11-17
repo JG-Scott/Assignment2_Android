@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         // get or create SharedPreferences
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
 
-        System.out.println(sharedPref.toString());
         database = FirebaseDatabase.getInstance();
         Button send = findViewById(R.id.button);
         send.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
                 sendReading();
             }
         });
-
 
         Button average = findViewById(R.id.buttonAVG);
         average.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
         if(sharedPref.getString("user_id", null) == null){ // if user doesnt exist.
             uniqueID = UUID.randomUUID().toString();
             sharedPref.edit().putString("user_id", uniqueID).apply();
-
 
             myRef = database.getReference("Users").child(uniqueID);
             user.addReading(name, s, d);

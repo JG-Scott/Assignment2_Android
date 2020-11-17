@@ -1,18 +1,22 @@
 package com.example.assignment2;
 
 import java.util.Date;
+import java.util.UUID;
+
 
 public class Reading {
     private Date readingDate;
     private int systolicReading;
     private int diastolicReading;
     private String condition;
+    private String id;
 
     public Reading(int s, int d){
         readingDate = new Date();
         this.systolicReading = s;
         this.diastolicReading = d;
         condition = this.getCondition(s, d);
+        createSalt();
     }
 
     public Reading(){}
@@ -41,6 +45,8 @@ public class Reading {
         return condition;
     }
 
+    public String getId() {return id;};
+
     public String getCondition(int s, int d){
         if(s < 120 && d < 80){
             return "Normal";
@@ -54,6 +60,11 @@ public class Reading {
             return "Hypertensive Crisis: Consult your doctor immediately";
         }
 
+    }
+    public void createSalt() {
+        String ts = String.valueOf(System.currentTimeMillis());
+        String rand = UUID.randomUUID().toString();
+        id = rand;
     }
 
 }

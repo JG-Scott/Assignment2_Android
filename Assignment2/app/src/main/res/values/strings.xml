@@ -17,6 +17,7 @@
     <string name="btnDelete">Delete</string>
     <string name="hintSystolic">Systolic reading</string>
     <string name="hintDiastolic">Diastolic reading</string>
+    <string name="allReadings">All readings</string>
 
 
 

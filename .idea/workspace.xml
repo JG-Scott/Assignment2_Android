@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="19e3d358-2a73-426f-960f-fc58d33e0912" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assignment2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment2/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assignment2/app/src/main/java/com/example/assignment2/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment2/app/src/main/java/com/example/assignment2/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assignment2/app/src/main/java/com/example/assignment2/Reading.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment2/app/src/main/java/com/example/assignment2/Reading.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assignment2/app/src/main/res/layout/activity_single_reading_activiy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment2/app/src/main/res/layout/activity_single_reading_activiy.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assignment2/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment2/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +31,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="android.sdk.path" value="C:/Work" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Assignment2" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="SvnConfiguration">
@@ -43,5 +46,11 @@
       <updated>1605126777256</updated>
     </task>
     <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="740" y="295" key="FileChooserDialogImpl" timestamp="1605579320835">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="740" y="295" key="FileChooserDialogImpl/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1605579320835" />
   </component>
 </project>
